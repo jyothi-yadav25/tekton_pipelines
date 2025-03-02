@@ -8,10 +8,10 @@ spec:
       type: string
   workspaces:
     - name: output
-      mountPath: /source
+      mountPath:  /workspace/shared-workspace
   steps:
     - name: clone
       image: alpine/git
       script: |
-        
+        mkdir -p /source
         git clone $(params.repo-url) /source
