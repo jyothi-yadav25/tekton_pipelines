@@ -34,7 +34,7 @@ metadata:
 spec:
   params:
     - name: repo-url
-      value: $(body.repository.clone_url)
+      value: https://github.com/jyothi-yadav25/tekton_pipelines.git
     - name: file-path
       value: "README.md"
 
