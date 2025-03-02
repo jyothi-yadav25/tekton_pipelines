@@ -23,7 +23,8 @@ spec:
             value: "$(tt.params.file-path)"
         workspaces:
           - name: shared-workspace
-            emptyDir: {}
+            persistentVolumeClaim:
+              claimName: my-pvc
 
 ---
 apiVersion: triggers.tekton.dev/v1beta1

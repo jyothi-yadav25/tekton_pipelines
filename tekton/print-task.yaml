@@ -5,6 +5,7 @@ metadata:
 spec:
   workspaces:
     - name: shared-workspace
+      mountPath: /source
   params:
     - name: file-path
       description: "Path to the file to print"
@@ -13,4 +14,4 @@ spec:
     - name: print-file-content
       image: alpine
       script: |
-        cat /workspace/shared-workspace/source/$(params.file-path)
+        cat /source/$(params.file-path)
