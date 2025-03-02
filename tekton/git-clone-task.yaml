@@ -13,5 +13,5 @@ spec:
     - name: clone
       image: alpine/git
       script: |
-        
+        rm -rf $(workspaces.output.path)/* ß
         git clone $(params.repo-url) $(workspaces.output.path)
