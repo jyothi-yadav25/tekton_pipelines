@@ -1,0 +1,34 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: simple-pipeline
+spec:
+  params:
+    - name: repo-url
+      type: string
+    - name: file-path
+      type: string
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: clone-repo
+      taskRef:
+        name: git-clone
+      params:
+        - name: repo-url
+          value: "$(params.repo-url)"
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+
+    - name: print-file
+      taskRef:
+        name: print-file
+      params:
+        - name: file-path
+          value: "$(params.file-path)"
+      workspaces:
+        - name: shared-workspace
+          workspace: shared-workspace
+      runAfter:
+        - clone-repo

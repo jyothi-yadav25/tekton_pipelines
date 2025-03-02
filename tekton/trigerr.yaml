@@ -1,0 +1,51 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: my-trigger-template
+spec:
+  params:
+    - name: repo-url
+      description: "GitHub Repository URL"
+    - name: file-path
+      description: "Path to the file to print"
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: triggered-pipeline-run-
+      spec:
+        pipelineRef:
+          name: simple-pipeline
+        params:
+          - name: repo-url
+            value: "$(tt.params.repo-url)"
+          - name: file-path
+            value: "$(tt.params.file-path)"
+        workspaces:
+          - name: shared-workspace
+            emptyDir: {}
+
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: my-trigger-binding
+spec:
+  params:
+    - name: repo-url
+      value: $(body.repository.clone_url)
+    - name: file-path
+      value: "README.md"
+
+---
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: my-event-listener
+spec:
+  triggers:
+    - name: github-trigger
+      bindings:
+        - ref: my-trigger-binding
+      template:
+        ref: my-trigger-template

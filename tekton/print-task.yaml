@@ -1,0 +1,16 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: print-file
+spec:
+  workspaces:
+    - name: shared-workspace
+  params:
+    - name: file-path
+      description: "Path to the file to print"
+      type: string
+  steps:
+    - name: print-file-content
+      image: alpine
+      script: |
+        cat /workspace/shared-workspace/source/$(params.file-path)
