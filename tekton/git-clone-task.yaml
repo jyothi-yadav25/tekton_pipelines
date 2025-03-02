@@ -12,4 +12,5 @@ spec:
     - name: clone
       image: alpine/git
       script: |
+        mkdir -p /workspace/output/source
         git clone $(params.repo-url) /workspace/output/source
