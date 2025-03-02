@@ -36,7 +36,7 @@ spec:
     - name: repo-url
       value: https://github.com/jyothi-yadav25/tekton_pipelines.git
     - name: file-path
-      value: "README.md"
+      value: "tekton/README.md"
 
 ---
 apiVersion: triggers.tekton.dev/v1beta1
